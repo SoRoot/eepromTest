@@ -2,9 +2,12 @@
 //
 
 #include <iostream>
-#include <Windows.h>
+/* #include <Windows.h> */
 #include "ftd2xx.h"
 #include "eepromTest.h"
+/* #include <chrono> */
+/* #include <thread> */
+#include <unistd.h>
 
 
 //////////////////////////////////////////////////////////////////////////////////////
@@ -124,7 +127,8 @@ BOOL initEEPROM(void)
 		if (ftStatus != FT_OK)
 			return FT_IO_ERROR; /*Error on initialize MPSEE of FT2232H*/
 
-		Sleep(50);	// Wait for all the USB stuff to complete and work
+		/* Sleep(50);	// Wait for all the USB stuff to complete and work */
+		usleep(50 * 1000); 
 
 		//////////////////////////////////////////////////////////////////
 		// Below codes will synchronize the MPSSE interface by sending bad command ‘xAA’ and checking  if the echo command followed by
@@ -169,12 +173,14 @@ BOOL initEEPROM(void)
 		OutputBuffer[dwNumBytesToSend++] = (dwClockDivisor >> 8) & '\xFF'; // Set 0xValueH of clock divisor
 		ftStatus = FT_Write(ftHandle, OutputBuffer, dwNumBytesToSend, &dwNumBytesSent); // Send off the commands
 		dwNumBytesToSend = 0; // Clear output buffer
-		Sleep(20); // Delay for a while
+		/* Sleep(20); // Delay for a while */
+		usleep(20 * 1000); 
 		// Turn off loop back in case
 		OutputBuffer[dwNumBytesToSend++] = '\x85'; // Command to turn off loop back of TDI/TDO connection
 		ftStatus = FT_Write(ftHandle, OutputBuffer, dwNumBytesToSend, &dwNumBytesSent); // Send off the commands
 		dwNumBytesToSend = 0; // Clear output buffer
-		Sleep(30);	// Delay for a while
+		/* Sleep(30);	// Delay for a while */
+		usleep(30 * 1000); 
 
 		return FT_OK;
 	}
@@ -204,7 +210,8 @@ BOOL programEEPROM(void)
 	// Send off the commands
 	ftStatus = FT_Write(ftHandle, OutputBuffer, dwNumBytesToSend, &dwNumBytesSent);
 	dwNumBytesToSend = 0; // Clear output buffer
-	Sleep(50);						// Delay for a while to ensure EEPROM program is completed
+	/* Sleep(50);						// Delay for a while to ensure EEPROM program is completed */
+		usleep(50 * 1000); 
 
 
 	if (bSucceed == TRUE)
