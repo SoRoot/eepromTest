@@ -38,8 +38,8 @@
           src = ./.;
 
 
-buildPhase = "g++ ./eepromTest.cpp -o eepromTest";
-installPhase = "mkdir -p $out/bin; install -t $out/bin eepromTest";
+          buildPhase = "${pkgs.clang}/bin/clang++ eepromTest.cpp -o eepromtest libftd2xx/build/libftd2xx.a";
+installPhase = "mkdir -p $out/bin; install -t $out/bin eepromtest";
         };
 
       };
