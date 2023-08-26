@@ -3,10 +3,8 @@
 
 #include <iostream>
 /* #include <Windows.h> */
-#include "ftd2xx.h"
+#include "./libftd2xx/ftd2xx.h"
 #include "eepromTest.h"
-/* #include <chrono> */
-/* #include <thread> */
 #include <unistd.h>
 
 

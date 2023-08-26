@@ -1,5 +1,3 @@
-# buildPhase = "clang++ -c -E -o eepromTest ./eepromTest/eepromtest.cpp";
-# installPhase = "mkdir -p $out/bin; install -t $out/bin eepromTest";
 # packages = with pkgs; [
 #   llvmPackages_15.clang-unwrapped
 #   cmake
@@ -35,26 +33,13 @@
           pname = "eepromtest";
           version = "1";
 
+          nativeBuildInputs = [ pkg-config ];
 
-          nativeBuildInputs = [
-            # cmake
-            # ninja
-            pkg-config
-          ];
+          src = ./.;
 
-          buildInputs = [
-            alsa-lib
-            fluidsynth
-            # libftdi1
-            # libftdi
-            libsndfile
-            mpg123
-            zlib
-          ];
 
-          src = ./release/examples;
-
-          # nativeBuildInputs = [ autoreconfHook ];
+buildPhase = "g++ ./eepromTest.cpp -o eepromTest";
+installPhase = "mkdir -p $out/bin; install -t $out/bin eepromTest";
         };
 
       };
